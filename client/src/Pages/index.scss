@@ -1,0 +1,50 @@
+.home {
+  align-items: center;
+  justify-content: center;
+  padding: 0 4rem;
+  height: 80vh;
+  width: 100%;
+  gap: 1rem;
+  position: relative;
+
+  .slogan {
+    .slogan-title {
+      font-size: 4rem;
+      font-weight: 800;
+      .best {
+        color: var(--text-secondary);
+      }
+    }
+    .slogan-description {
+      color: #5c5c5f;
+      font-size: 1.1rem;
+    }
+    .appointment-btn {
+      background-color: var(--bg-secondary);
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 2rem;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+    }
+  }
+  .doctor-img img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 55em) {
+  main {
+    padding: 0 1.2rem;
+  }
+  .home {
+    padding: 0;
+    .slogan-title {
+      font-size: 3rem !important;
+    }
+  }
+  .doctor-img img {
+    display: none;
+  }
+}
