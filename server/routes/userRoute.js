@@ -50,9 +50,14 @@ router.post("/login", async (req, res) => {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
         expiresIn: "1d",
       });
-      res
-        .status(200)
-        .send({ message: "Login successful", success: true, data: token });
+      res.status(200).send({
+        message: "Login successful",
+        success: true,
+        data: {
+          token,
+          id: user._id,
+        },
+      });
     }
   } catch (error) {
     console.log(error);
@@ -61,10 +66,10 @@ router.post("/login", async (req, res) => {
       .send({ message: "Error logging in", success: false, error });
   }
 });
-
-router.post("/get-user-info-by-id", authMiddleware, async (req, res) => {
+// Get
+router.get("/:id", authMiddleware, async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.body.userId });
+    const user = await User.findOne({ _id: req.params.id });
     user.password = undefined;
     if (!user) {
       return res

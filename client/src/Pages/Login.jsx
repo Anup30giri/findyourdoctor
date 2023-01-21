@@ -14,37 +14,38 @@ const Login = () => {
   const location = useLocation();
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect, { replace: true });
+    }
+  }, [navigate, redirect, userInfo]);
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect, { replace: true });
-  //   }
-  // }, [navigate, redirect]);
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post(`${API}/api/user/login`, {
-        email: data.email,
-        password: data.password,
-      });
+    const res = await axios.post(`${API}/api/user/login`, {
+      email: data.email,
+      password: data.password,
+    });
+    if (res.data.success) {
       setSuccess(true);
       localStorage.setItem("userInfo", JSON.stringify(res.data));
-      setInterval(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.error);
-      }
-      console.log(error.response);
+      window.location.href = "/";
+    } else {
+      setError(res.data.message);
     }
   };
   return (
     <div className="container login-page py-5 d-flex flex-column align-items-center justify-content-center">
+      {error && <div className="alert alert-danger">{error}</div>}
+      {success && (
+        <div className="alert alert-success">Logged In Successfully</div>
+      )}
       <h2 className="text-primary">Login</h2>
       <form
         style={{ width: "30%" }}

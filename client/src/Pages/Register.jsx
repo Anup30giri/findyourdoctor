@@ -5,6 +5,7 @@ import { API } from "../network";
 import axios from "axios";
 
 const Register = () => {
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const [data, setData] = useState({
     name: "",
     email: "",
@@ -17,11 +18,11 @@ const Register = () => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  //   useEffect(() => {
-  //     if (userInfo) {
-  //       navigate(redirect, { replace: true });
-  //     }
-  //   }, [navigate, redirect]);
+  useEffect(() => {
+    if (userInfo) {
+      navigate(redirect, { replace: true });
+    }
+  }, [navigate, redirect, userInfo]);
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -29,27 +30,24 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    try {
-      const res = await axios.post(`${API}/api/user`, {
-        email: data.email,
-        password: data.password,
-        name: data.name,
-      });
+    const res = await axios.post(`${API}/api/user`, {
+      email: data.email,
+      password: data.password,
+      name: data.name,
+    });
+    if (res.data.success) {
       setSuccess(true);
-      localStorage.setItem("userInfo", JSON.stringify(res.data));
-      setInterval(() => {
-        window.location.reload();
-      }, 1000);
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.error);
-      }
-      console.log(error.response);
+      navigate("/login");
+    } else {
+      setError(res.data.message);
     }
   };
   return (
     <div className="container login-page py-5 d-flex flex-column align-items-center justify-content-center">
       <h2 className="text-primary">Register</h2>
+      {success && (
+        <div className="alert alert-success">Registered Successfully</div>
+      )}
       {error && <h5 className="text-danger">{error}</h5>}
       <form
         style={{ width: "30%" }}

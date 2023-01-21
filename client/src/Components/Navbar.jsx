@@ -1,13 +1,17 @@
 import React from "react";
+import { useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { ContextUser } from "../Context/UserContext";
 import "./index.css";
+
 const Navbar = () => {
-  var userInfo;
+  const user = useContext(ContextUser);
+  var userInfo = user;
   const logout = () => {
     localStorage.removeItem("userInfo");
     setInterval(() => {
       window.location.href = "/login";
-    }, 1000);
+    }, 500);
   };
   return (
     <>
