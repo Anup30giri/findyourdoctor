@@ -33,11 +33,9 @@
 }
 
 @media screen and (max-width: 55em) {
-  main {
-    padding: 0 1.2rem;
-  }
   .home {
     // flex-direction: column;
+    padding: 2.6rem 1.1rem;
     .slogan-title {
       font-size: 2.5rem !important;
     }

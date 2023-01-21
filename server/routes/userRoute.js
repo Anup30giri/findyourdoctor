@@ -4,7 +4,7 @@ const User = require("../models/userModel");
 const Doctor = require("../models/doctorModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const authMiddleware = require("../middlewares/authMiddleware");
+const { isAuthenticated } = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const moment = require("moment");
 
@@ -67,7 +67,7 @@ router.post("/login", async (req, res) => {
   }
 });
 // Get
-router.get("/:id", authMiddleware, async (req, res) => {
+router.get("/:id", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.params.id });
     user.password = undefined;
@@ -88,7 +88,7 @@ router.get("/:id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
+router.post("/apply-doctor-account", isAuthenticated, async (req, res) => {
   try {
     const newdoctor = new Doctor({ ...req.body, status: "pending" });
     await newdoctor.save();
@@ -120,7 +120,7 @@ router.post("/apply-doctor-account", authMiddleware, async (req, res) => {
 });
 router.post(
   "/mark-all-notifications-as-seen",
-  authMiddleware,
+  isAuthenticated,
   async (req, res) => {
     try {
       const user = await User.findOne({ _id: req.body.userId });
@@ -147,7 +147,7 @@ router.post(
   }
 );
 
-router.post("/delete-all-notifications", authMiddleware, async (req, res) => {
+router.post("/delete-all-notifications", isAuthenticated, async (req, res) => {
   try {
     const user = await User.findOne({ _id: req.body.userId });
     user.seenNotifications = [];
@@ -169,7 +169,7 @@ router.post("/delete-all-notifications", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/get-all-approved-doctors", authMiddleware, async (req, res) => {
+router.get("/get-all-approved-doctors", isAuthenticated, async (req, res) => {
   try {
     const doctors = await Doctor.find({ status: "approved" });
     res.status(200).send({
@@ -187,7 +187,7 @@ router.get("/get-all-approved-doctors", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/book-appointment", authMiddleware, async (req, res) => {
+router.post("/book-appointment", isAuthenticated, async (req, res) => {
   try {
     req.body.status = "pending";
     req.body.date = moment(req.body.date, "DD-MM-YYYY").toISOString();
@@ -216,7 +216,7 @@ router.post("/book-appointment", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/check-booking-avilability", authMiddleware, async (req, res) => {
+router.post("/check-booking-avilability", isAuthenticated, async (req, res) => {
   try {
     const date = moment(req.body.date, "DD-MM-YYYY").toISOString();
     const fromTime = moment(req.body.time, "HH:mm")
@@ -250,21 +250,25 @@ router.post("/check-booking-avilability", authMiddleware, async (req, res) => {
   }
 });
 
-router.get("/get-appointments-by-user-id", authMiddleware, async (req, res) => {
-  try {
-    const appointments = await Appointment.find({ userId: req.body.userId });
-    res.status(200).send({
-      message: "Appointments fetched successfully",
-      success: true,
-      data: appointments,
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      message: "Error fetching appointments",
-      success: false,
-      error,
-    });
+router.get(
+  "/get-appointments-by-user-id",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      const appointments = await Appointment.find({ userId: req.body.userId });
+      res.status(200).send({
+        message: "Appointments fetched successfully",
+        success: true,
+        data: appointments,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error fetching appointments",
+        success: false,
+        error,
+      });
+    }
   }
-});
+);
 module.exports = router;

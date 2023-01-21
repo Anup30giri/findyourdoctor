@@ -1,26 +1,30 @@
 const express = require("express");
 const router = express.Router();
 const Doctor = require("../models/doctorModel");
-const authMiddleware = require("../middlewares/authMiddleware");
+const { isAuthenticated } = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const User = require("../models/userModel");
 
-router.post("/get-doctor-info-by-user-id", authMiddleware, async (req, res) => {
-  try {
-    const doctor = await Doctor.findOne({ userId: req.body.userId });
-    res.status(200).send({
-      success: true,
-      message: "Doctor info fetched successfully",
-      data: doctor,
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .send({ message: "Error getting doctor info", success: false, error });
+router.post(
+  "/get-doctor-info-by-user-id",
+  isAuthenticated,
+  async (req, res) => {
+    try {
+      const doctor = await Doctor.findOne({ userId: req.body.userId });
+      res.status(200).send({
+        success: true,
+        message: "Doctor info fetched successfully",
+        data: doctor,
+      });
+    } catch (error) {
+      res
+        .status(500)
+        .send({ message: "Error getting doctor info", success: false, error });
+    }
   }
-});
+);
 
-router.post("/get-doctor-info-by-id", authMiddleware, async (req, res) => {
+router.post("/get-doctor-info-by-id", isAuthenticated, async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ _id: req.body.doctorId });
     res.status(200).send({
@@ -35,7 +39,7 @@ router.post("/get-doctor-info-by-id", authMiddleware, async (req, res) => {
   }
 });
 
-router.post("/update-doctor-profile", authMiddleware, async (req, res) => {
+router.post("/update-doctor-profile", isAuthenticated, async (req, res) => {
   try {
     const doctor = await Doctor.findOneAndUpdate(
       { userId: req.body.userId },
@@ -55,7 +59,7 @@ router.post("/update-doctor-profile", authMiddleware, async (req, res) => {
 
 router.get(
   "/get-appointments-by-doctor-id",
-  authMiddleware,
+  isAuthenticated,
   async (req, res) => {
     try {
       const doctor = await Doctor.findOne({ userId: req.body.userId });
@@ -76,7 +80,7 @@ router.get(
   }
 );
 
-router.post("/change-appointment-status", authMiddleware, async (req, res) => {
+router.post("/change-appointment-status", isAuthenticated, async (req, res) => {
   try {
     const { appointmentId, status } = req.body;
     const appointment = await Appointment.findByIdAndUpdate(appointmentId, {

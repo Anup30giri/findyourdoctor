@@ -2,7 +2,6 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import Footer from "../Footer/Footer";
 import Navbar from "../Navbar";
-import "./index.scss";
 
 const Layout = () => {
   return (

@@ -62,31 +62,42 @@ const Navbar = () => {
                 <li className="nav-item dropdown">
                   <NavLink
                     to=""
-                    className=" dropdown-toggle"
+                    className="nav-link dropdown-toggle"
                     type="button"
                     id="dropdownMenuButton1"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                     role="button"
                   >
-                    <img
-                      src={userInfo.image}
-                      alt={userInfo.name}
-                      className="img"
-                      style={{ height: 40, width: 40 }}
-                    />
+                    {userInfo.name}
                   </NavLink>
                   <ul
                     className="dropdown-menu profile-drop dropdown-content dropdown-menu-light"
                     aria-labelledby="dropdownMenuButton1"
                   >
-                    <li>
-                      <NavLink className="dropdown-item" to="/myprofile">
-                        {userInfo.name}
+                    <li className="nav-item">
+                      <NavLink
+                        className="text-dark fs-6 fw-bold dropdown-item"
+                        to="/myprofile"
+                      >
+                        Profile
                       </NavLink>
                     </li>
+                    {userInfo.isAdmin && (
+                      <li className="nav-item">
+                        <NavLink
+                          className="text-dark fs-6 fw-bold dropdown-item"
+                          to="/admin/dashboard"
+                        >
+                          Dashboard
+                        </NavLink>
+                      </li>
+                    )}
                     <li>
-                      <button className="dropdown-item" onClick={logout}>
+                      <button
+                        className="text-danger fs-6 fw-bold dropdown-item"
+                        onClick={logout}
+                      >
                         Signout
                       </button>
                     </li>

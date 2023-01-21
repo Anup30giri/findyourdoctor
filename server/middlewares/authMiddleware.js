@@ -1,23 +1,41 @@
 const jwt = require("jsonwebtoken");
-
-module.exports = async (req, res, next) => {
-  try {
-    const token = req.headers["authorization"].split(" ")[1];
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-      if (err) {
-        return res.status(401).send({
-          message: "Auth failed",
-          success: false,
-        });
-      } else {
-        req.body.userId = decoded.id;
-        next();
-      }
-    });
-  } catch (error) {
-    return res.status(401).send({
-      message: "Auth failed",
-      success: false,
-    });
+const User = require("../models/userModel");
+const isAuthenticated = async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer")
+  ) {
+    try {
+      token = req.headers.authorization.split(" ")[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = await User.findById(decoded.id).select("-password");
+      next();
+    } catch (error) {
+      console.error(error);
+      res.status(401);
+      throw new Error("Not authorized, token failed");
+    }
+  }
+  if (!token) {
+    res.status(401);
+    throw new Error("Not authorized, no token");
   }
 };
+const isDoctor = async (req, res, next) => {
+  if (req.user && req.user.isDoctor) {
+    next();
+  } else {
+    res.status(401).send({ message: "Not authorized as a doctor" });
+  }
+};
+const isAdmin = async (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next();
+  } else {
+    res
+      .status(401)
+      .send({ message: "Not authorized as an admin", user: req.user });
+  }
+};
+module.exports = { isAuthenticated, isAdmin, isDoctor };

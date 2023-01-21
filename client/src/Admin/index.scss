@@ -1,0 +1,43 @@
+.admin-container {
+  display: flex;
+  width: 100%;
+  .admin-content {
+    flex-basis: 80%;
+    padding: 2rem 0.8rem;
+  }
+  .sidebar {
+    flex-basis: 20%;
+    background-color: #5f606d;
+    padding: 0 1rem;
+    max-height: 100vh;
+
+    .sidebar-item {
+      padding: 0.2rem 0;
+      letter-spacing: 0.2ch;
+      p {
+        font-weight: bold;
+        transition: all 0.2s linear;
+        font-size: 1rem;
+        &:hover {
+          color: var(--text-secondary);
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 55em) {
+  .admin-container {
+    flex-direction: column;
+    .admin-content {
+      flex-basis: 100%;
+    }
+    .sidebar {
+      flex-basis: 100%;
+      flex-direction: row !important;
+      gap: 1rem;
+      height: 40px;
+      padding: 0.5rem 1rem !important;
+      align-items: center;
+    }
+  }
+}
