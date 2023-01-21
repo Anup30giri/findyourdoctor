@@ -28,9 +28,16 @@ li {
 
 a {
   text-decoration: none;
+  font-size: 1.1rem;
 }
 
 h4 {
   font-weight: 700;
   font-size: 1.3rem;
+}
+
+@media screen and (max-width: 50em) {
+  .form-container {
+    width: auto !important;
+  }
 }

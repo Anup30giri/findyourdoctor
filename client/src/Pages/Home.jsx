@@ -9,8 +9,8 @@ const Home = () => {
           To Get Solutions.
         </h2>
         <p className="slogan-description">
-          Health is one of the most important things for us threfore <br />
-          immediately check your health for you good
+          Health is one of the most important things for us therefore <br />
+          immediately check your health for your well-being.
         </p>{" "}
         <button className="appointment-btn">Appointment</button>
       </section>

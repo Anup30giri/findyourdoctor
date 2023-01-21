@@ -10,16 +10,19 @@ const Footer = () => {
           <h3>
             <i className="fa fa-medkit"></i> FYD
           </h3>
-          <p className="fyd-description"></p>
+          <p className="fyd-description">
+            Find Your Doctor is a Web Application that will help patients to
+            book doctor appointment and fulfil their prospects.
+          </p>
           <div className="social-icons">
             <span>
-              <i class="fa-brands fa-instagram"></i>
+              <i className="fa-brands fa-instagram"></i>
             </span>
             <span>
               <i className="fa-brands fa-twitter"> </i>
             </span>
             <span>
-              <i class="fa-brands fa-facebook-f"></i>
+              <i className="fa-brands fa-facebook-f"></i>
             </span>
             <span>
               <i className="fa-brands fa-linkedin-in"> </i>
@@ -33,6 +36,13 @@ const Footer = () => {
           <Link to="/">Team</Link>
           <Link to="/">Career</Link>
           <Link to="/blog">Blog</Link>
+        </div>
+        <div className="policies d-flex flex-column">
+          <h4>Policies</h4>
+          <Link to="/">Terms & Conditions</Link>
+          <Link to="/">Privacy Policy</Link>
+          <Link to="/">Refund Policy</Link>
+          <Link to="/">Billing System</Link>
         </div>
         <div className="newsletter d-flex flex-column">
           <h4>Subscribe Our Newsletter</h4>

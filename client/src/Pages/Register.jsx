@@ -1,10 +1,12 @@
-import { useEffect, useState } from "react";
-import { API } from "../network";
+import React from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { API } from "../network";
 import axios from "axios";
 
-const Login = () => {
+const Register = () => {
   const [data, setData] = useState({
+    name: "",
     email: "",
     password: "",
   });
@@ -15,11 +17,12 @@ const Login = () => {
 
   const redirect = location.search ? location.search.split("=")[1] : "/";
 
-  // useEffect(() => {
-  //   if (userInfo) {
-  //     navigate(redirect, { replace: true });
-  //   }
-  // }, [navigate, redirect]);
+  //   useEffect(() => {
+  //     if (userInfo) {
+  //       navigate(redirect, { replace: true });
+  //     }
+  //   }, [navigate, redirect]);
+
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
@@ -27,9 +30,10 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(`${API}/api/user/login`, {
+      const res = await axios.post(`${API}/api/user`, {
         email: data.email,
         password: data.password,
+        name: data.name,
       });
       setSuccess(true);
       localStorage.setItem("userInfo", JSON.stringify(res.data));
@@ -45,12 +49,27 @@ const Login = () => {
   };
   return (
     <div className="container login-page py-5 d-flex flex-column align-items-center justify-content-center">
-      <h2 className="text-primary">Login</h2>
+      <h2 className="text-primary">Register</h2>
+      {error && <h5 className="text-danger">{error}</h5>}
       <form
         style={{ width: "30%" }}
         onSubmit={handleSubmit}
         className="py-3 d-flex flex-column form-container "
       >
+        <div className="name">
+          <label htmlFor="name" className="form-label">
+            Name
+          </label>
+          <input
+            id="name"
+            type="name"
+            name="name"
+            placeholder="Fullname"
+            className="form-control"
+            onChange={handleChange}
+            value={data.name}
+          />
+        </div>
         <div className="email">
           <label htmlFor="email" className="form-label">
             Email
@@ -80,15 +99,15 @@ const Login = () => {
           />
         </div>
         <div className="action-btn d-flex flex-column">
-          <button className="btn btn-primary mt-2">Login</button>
+          <button className="btn btn-primary my-2">Register</button>
         </div>
-        <p className="my-2 text-center">Don't Have an Account ?</p>
-        <Link to="/register" className=" btn btn-primary">
-          Register
+        <p className=" text-center"> Have an Account ?</p>
+        <Link to="/login" className=" mb-1 btn btn-primary">
+          Login
         </Link>
       </form>
     </div>
   );
 };
 
-export default Login;
+export default Register;

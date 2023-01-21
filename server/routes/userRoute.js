@@ -8,7 +8,7 @@ const authMiddleware = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const moment = require("moment");
 
-router.post("/register", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const userExists = await User.findOne({ email: req.body.email });
     if (userExists) {

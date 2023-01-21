@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 import "./index.css";
 const Navbar = () => {
   var userInfo;
@@ -13,9 +13,9 @@ const Navbar = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-light d-flex">
         <div className="container-fluid py-auto ml-auto px-4">
-          <Link to="/" className=" navbar-brand main-logo">
+          <NavLink to="/" className=" navbar-brand main-logo">
             Find Your Doctor
-          </Link>
+          </NavLink>
           <button
             className="navbar-toggler"
             type="button"
@@ -30,33 +30,33 @@ const Navbar = () => {
             </span>
           </button>
           <div
-            className="collapse navbar-collapse justify-content-end"
+            className="collapse navbar-collapse justify-content-center"
             id="navbarSupportedContent"
           >
             <ul className="navbar-nav navbar-wrapper mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link active" to="/">
+                <NavLink className="nav-link" to="/">
                   Home
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to="/doctors">
+                <NavLink className="nav-link " to="/doctors">
                   Find Doctors
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to="/contact">
+                <NavLink className="nav-link " to="/contact">
                   Contact
-                </Link>
+                </NavLink>
               </li>
               <li className="nav-item">
-                <Link className="nav-link active" to="/">
+                <NavLink className="nav-link " to="/about">
                   About
-                </Link>
+                </NavLink>
               </li>
               {userInfo ? (
                 <li className="nav-item dropdown">
-                  <Link
+                  <NavLink
                     to=""
                     className=" dropdown-toggle"
                     type="button"
@@ -71,15 +71,15 @@ const Navbar = () => {
                       className="img"
                       style={{ height: 40, width: 40 }}
                     />
-                  </Link>
+                  </NavLink>
                   <ul
                     className="dropdown-menu profile-drop dropdown-content dropdown-menu-light"
                     aria-labelledby="dropdownMenuButton1"
                   >
                     <li>
-                      <Link className="dropdown-item" to="/myprofile">
+                      <NavLink className="dropdown-item" to="/myprofile">
                         {userInfo.name}
-                      </Link>
+                      </NavLink>
                     </li>
                     <li>
                       <button className="dropdown-item" onClick={logout}>
@@ -90,7 +90,10 @@ const Navbar = () => {
                 </li>
               ) : (
                 <li className="nav-item">
-                  <Link className="nav-link login-button " to="/login">
+                  <Link
+                    className="nav-link login-button text-light "
+                    to="/login"
+                  >
                     Sign In
                   </Link>
                 </li>
