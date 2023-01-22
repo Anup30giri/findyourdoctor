@@ -8,8 +8,9 @@ import Table from "./Table";
 
 const Profile = () => {
   const [appointments, setAppointments] = useState([]);
+  const [appointmentsFromUser, setAppointmentsFromUser] = useState([]);
   const user = useContext(ContextUser);
-  const getAppointments = () => {
+  const getAppointmentsOfDoctor = () => {
     axios
       .post(
         `${API}/api/appointment/userId`,
@@ -29,8 +30,27 @@ const Profile = () => {
         console.log(err);
       });
   };
+  // get all appointments from user
+  const getAppointmentsFromUser = () => {
+    axios
+      .get(`${API}/api/appointment/doctorID`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        if (res.data.success) {
+          setAppointmentsFromUser(res.data.data);
+          console.log(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   useEffect(() => {
-    getAppointments();
+    getAppointmentsOfDoctor();
+    getAppointmentsFromUser();
   }, []);
 
   return (
@@ -68,7 +88,7 @@ const Profile = () => {
         </h3>
         {user && user.isDoctor ? (
           <>
-            <DoctorTable />
+            <DoctorTable appointmentsFromUser={appointmentsFromUser} />
           </>
         ) : (
           <>
