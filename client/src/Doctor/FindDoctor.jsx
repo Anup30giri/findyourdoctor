@@ -96,7 +96,7 @@ const FindDoctor = () => {
                   <p className="text-primary specialization  fw-bolder">
                     {doctor.specialization}
                   </p>
-                  <p className="text-primary fw-bold">
+                  <p className="text-success fw-bold">
                     Rs. {doctor.feePerConsultation}
                   </p>
                 </div>

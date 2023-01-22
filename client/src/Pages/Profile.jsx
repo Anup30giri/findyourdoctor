@@ -1,14 +1,43 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { useContext } from "react";
 import { ContextUser } from "../Context/UserContext";
+import DoctorTable from "../Doctor/DoctorTable";
+import { API, ID, token } from "../network";
+import Table from "./Table";
 
 const Profile = () => {
+  const [appointments, setAppointments] = useState([]);
   const user = useContext(ContextUser);
+  const getAppointments = () => {
+    axios
+      .post(
+        `${API}/api/appointment/userId`,
+        { ID },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((res) => {
+        if (res.data.success) {
+          setAppointments(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  useEffect(() => {
+    getAppointments();
+  }, []);
+
   return (
-    <div className="profile-page d-flex p-3">
+    <div className="profile-page row gx-0 p-3">
       <div
-        style={{ flex: "2" }}
-        className="personal-info d-flex justify-content-center flex-column"
+        className="personal-info d-flex justify-content-around flex-column col-md-4"
+        style={{ border: "1px dashed #D2CDF2" }}
       >
         <h3 style={{ color: "orange" }} className="py-3  fw-bold">
           Personal Information
@@ -30,10 +59,22 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <section className="my-appointments" style={{ flex: "3" }}>
+      <section
+        className="my-appointments col-md-8"
+        style={{ border: "1px dashed #D2CDF2" }}
+      >
         <h3 style={{ color: "orange" }} className=" py-3 text-center  fw-bold">
           My Appointments
         </h3>
+        {user && user.isDoctor ? (
+          <>
+            <DoctorTable />
+          </>
+        ) : (
+          <>
+            <Table appointments={appointments} />
+          </>
+        )}
       </section>
     </div>
   );
