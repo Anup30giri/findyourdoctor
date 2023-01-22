@@ -40,4 +40,8 @@ h4 {
   .form-container {
     width: auto !important;
   }
+
+  .banner-img {
+    display: none;
+  }
 }

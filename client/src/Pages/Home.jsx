@@ -20,7 +20,12 @@ const Home = () => {
           immediately check your health for your well-being.
         </p>{" "}
         <div className="appoint-btns d-flex ">
-          <button className="appointment-btn">Appointment</button>
+          <button
+            className="appointment-btn"
+            onClick={() => navigate("/doctor/find")}
+          >
+            Find Doctors
+          </button>
           {user && !user.isDoctor ? (
             <button
               className="appointment-btn"

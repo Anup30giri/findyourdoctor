@@ -11,6 +11,8 @@ import Profile from "./Pages/Profile";
 import FindDoctor from "./Doctor/FindDoctor";
 import Appointment from "./Doctor/Appointment";
 import GetAllAppointments from "./Admin/GetAllAppointments";
+import About from "./Pages/About";
+import Contact from "./Pages/Contact";
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
 
             {/* Doctor */}
             <Route path="/doctor/apply" element={<ApplyDoctor />} />
