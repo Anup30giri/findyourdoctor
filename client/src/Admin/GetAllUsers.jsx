@@ -14,7 +14,6 @@ const GetAllUsers = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res.data.data);
       if (res.data.success) {
         setUser(res.data.data);
       }
@@ -24,9 +23,7 @@ const GetAllUsers = () => {
   };
 
   useEffect(() => {
-    const abortController = new AbortController();
     getUsers();
-    return () => abortController.abort();
   }, []);
   return (
     <div className="admin-container">
@@ -35,7 +32,7 @@ const GetAllUsers = () => {
         <h2 className="fw-bolder text-center text-primary">
           List of all Users
         </h2>
-        <div className="table-responsive">
+        <div className="table-responsive py-3">
           <table className="table table-striped table-hover">
             <thead className="table-warning">
               <tr>
@@ -55,7 +52,8 @@ const GetAllUsers = () => {
                     {user.isAdmin && "Admin"}
                     {!user.isDoctor && !user.isAdmin && "User"}
                   </td>
-                  <td>
+                  <td style={{ gap: "8px" }} className="d-flex ">
+                    <button className="btn btn-success">Update</button>
                     <button className="btn btn-danger">Delete</button>
                   </td>
                 </tr>

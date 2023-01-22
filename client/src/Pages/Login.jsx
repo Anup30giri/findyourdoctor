@@ -16,9 +16,13 @@ const Login = () => {
   const redirect = location.search ? location.search.split("=")[1] : "/";
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   useEffect(() => {
+    var mounted = true;
     if (userInfo) {
       navigate(redirect, { replace: true });
     }
+    return () => {
+      mounted = false;
+    };
   }, [navigate, redirect, userInfo]);
 
   const handleChange = ({ currentTarget: input }) => {

@@ -44,7 +44,7 @@ const Navbar = () => {
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link " to="/doctors">
+                <NavLink className="nav-link " to="/doctor/find">
                   Find Doctors
                 </NavLink>
               </li>
@@ -60,7 +60,7 @@ const Navbar = () => {
               </li>
               {userInfo ? (
                 <li className="nav-item dropdown">
-                  <NavLink
+                  <Link
                     to=""
                     className="nav-link dropdown-toggle"
                     type="button"
@@ -70,7 +70,7 @@ const Navbar = () => {
                     role="button"
                   >
                     {userInfo.name}
-                  </NavLink>
+                  </Link>
                   <ul
                     className="dropdown-menu profile-drop dropdown-content dropdown-menu-light"
                     aria-labelledby="dropdownMenuButton1"
@@ -78,7 +78,7 @@ const Navbar = () => {
                     <li className="nav-item">
                       <NavLink
                         className="text-dark fs-6 fw-bold dropdown-item"
-                        to="/myprofile"
+                        to="/profile"
                       >
                         Profile
                       </NavLink>
@@ -86,7 +86,7 @@ const Navbar = () => {
                     {userInfo.isAdmin && (
                       <li className="nav-item">
                         <NavLink
-                          className="text-dark fs-6 fw-bold dropdown-item"
+                          className="text-dark  fs-6 fw-bold dropdown-item"
                           to="/admin/dashboard"
                         >
                           Dashboard

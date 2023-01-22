@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "axios";
 import { createContext, useState } from "react";
-import { API } from "../network";
+import { API, token } from "../network";
 import { useEffect } from "react";
+import axios from "axios";
 const ContextUser = createContext(null);
 
 const GlobalContext = ({ children }) => {
@@ -10,26 +10,28 @@ const GlobalContext = ({ children }) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
-    const myAbortController = new AbortController();
     if (userInfo) {
-      const getUserDetails = async () => {
-        const res = await axios.get(
-          `${API}/api/user/${userInfo && userInfo.data.id}`,
-          {
+      // Get User Detail
+      const getUserDetails = () => {
+        axios
+          .get(`${API}/api/user/${userInfo && userInfo.data.id}`, {
             headers: {
-              Authorization: `Bearer ${userInfo && userInfo.data.token}`,
+              Authorization: `Bearer ${token}`,
             },
-          }
-        );
-        setUser(res.data.data);
+          })
+          .then((res) => {
+            if (res.data.success) {
+              setUser(res.data.data);
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       };
       getUserDetails();
     }
-
-    return () => {
-      myAbortController.abort();
-    };
   }, []);
+
   return <ContextUser.Provider value={user}>{children}</ContextUser.Provider>;
 };
 export default GlobalContext;

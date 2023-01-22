@@ -18,13 +18,16 @@
       color: #5c5c5f;
       font-size: 1.1rem;
     }
-    .appointment-btn {
-      background-color: var(--bg-secondary);
-      border: none;
-      border-radius: 8px;
-      padding: 1rem 2rem;
-      color: var(--text-primary);
-      font-size: 1.1rem;
+    .appoint-btns {
+      gap: 1rem;
+      .appointment-btn {
+        background-color: var(--bg-secondary);
+        border: none;
+        border-radius: 8px;
+        padding: 1rem 1.4rem;
+        color: var(--text-primary);
+        font-size: 1.1rem;
+      }
     }
   }
   .doctor-img img {
@@ -34,13 +37,19 @@
 
 @media screen and (max-width: 55em) {
   .home {
-    // flex-direction: column;
     padding: 2.6rem 1.1rem;
     .slogan-title {
       font-size: 2.5rem !important;
     }
     .slogan-description {
       font-size: 1rem !important;
+    }
+    .appoint-btns {
+      gap: 1rem;
+      .appointment-btn {
+        padding: 1rem 1rem !important;
+        font-size: 1rem !important;
+      }
     }
   }
 }

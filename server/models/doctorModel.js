@@ -9,6 +9,12 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    image: {
+      type: String,
+      required: true,
+      default:
+        "https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*",
+    },
     lastName: {
       type: String,
       required: true,
@@ -33,17 +39,21 @@ const doctorSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    feePerCunsultation: {
+    feePerConsultation: {
       type: Number,
       required: true,
     },
     timings: {
-      type: Array,
+      type: String,
       required: true,
     },
     status: {
       type: String,
       default: "pending",
+    },
+    availability: {
+      type: Boolean,
+      default: true,
     },
   },
   {
