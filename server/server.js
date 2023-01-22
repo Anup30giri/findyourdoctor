@@ -19,4 +19,4 @@ app.use("/api/appointment", appointmentRoute);
 const port = process.env.PORT || 5000;
 
 app.get("/", (req, res) => res.send("Hello World!"));
-app.listen(port, () => console.log(`Node Express Server Started at ${port}!`));
+app.listen(port, () => console.log(`Server runnning at ${port}!`));

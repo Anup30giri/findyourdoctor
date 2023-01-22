@@ -14,6 +14,8 @@ router.get("/all-approved-doctors", async (req, res) => {
     res.status(500).send({ success: false, error });
   }
 });
+
+// Get Pending Doctors
 router.post(
   "/get-doctor-info-by-user-id",
   isAuthenticated,
@@ -33,6 +35,7 @@ router.post(
   }
 );
 
+// Get Doctor Info By  Doctor ID
 router.post("/get-doctor-info-by-id", isAuthenticated, async (req, res) => {
   try {
     const doctor = await Doctor.findOne({ _id: req.body.doctorId });
@@ -48,6 +51,7 @@ router.post("/get-doctor-info-by-id", isAuthenticated, async (req, res) => {
   }
 });
 
+// Update Doctor Profile
 router.post("/update-doctor-profile", isAuthenticated, async (req, res) => {
   try {
     const doctor = await Doctor.findOneAndUpdate(

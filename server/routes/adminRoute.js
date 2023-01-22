@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
 const Doctor = require("../models/doctorModel");
+const Appointment = require("../models/appointmentModel");
 const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
 
+// Get all doctors
 router.get("/get-all-doctors", isAuthenticated, isAdmin, async (req, res) => {
   try {
     const doctors = await Doctor.find({});
@@ -39,7 +41,7 @@ router.get("/get-all-users", isAuthenticated, isAdmin, async (req, res) => {
     });
   }
 });
-
+// Change doctor account status
 router.post(
   "/change-doctor-account-status",
   isAuthenticated,
@@ -52,12 +54,7 @@ router.post(
       });
 
       const user = await User.findOne({ _id: doctor.userId });
-      const unseenNotifications = user.unseenNotifications;
-      unseenNotifications.push({
-        type: "new-doctor-request-changed",
-        message: `Your doctor account has been ${status}`,
-        onClickPath: "/notifications",
-      });
+
       user.isDoctor = status === "approved" ? true : false;
       await user.save();
 
@@ -65,6 +62,29 @@ router.post(
         message: "Doctor status updated successfully",
         success: true,
         data: doctor,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error applying doctor account",
+        success: false,
+        error,
+      });
+    }
+  }
+);
+// Get all appointments
+router.get(
+  "/get-all-appointments",
+  isAuthenticated,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const appointments = await Appointment.find({});
+      res.status(200).send({
+        message: "Appointments fetched successfully",
+        success: true,
+        data: appointments,
       });
     } catch (error) {
       console.log(error);

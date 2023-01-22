@@ -1,5 +1,5 @@
 import React from "react";
-
+import moment from "moment";
 const Table = ({ appointments }) => {
   return (
     <div className="table-responsive">
@@ -20,12 +20,7 @@ const Table = ({ appointments }) => {
                 <td>{appointment?.doctorInfo.firstName}</td>
                 <td>{appointment?.doctorInfo.specialization}</td>
                 <td>{appointment?.date.substring(0, 10)}</td>
-                <td>
-                  {appointment?.time.substring(14, 19)}{" "}
-                  {appointment && appointment.time.substring(14, 16) >= 12
-                    ? "PM"
-                    : "AM"}
-                </td>
+                <td>{moment(appointment?.time).format("hh:mm A")}</td>
                 <td>{appointment?.status}</td>
               </tr>
             ))}

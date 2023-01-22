@@ -34,7 +34,6 @@ router.get("/doctorId", isAuthenticated, async (req, res) => {
       data: appointments,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       message: "Error fetching appointments",
       success: false,
@@ -51,13 +50,6 @@ router.post("/change-appointment-status", isAuthenticated, async (req, res) => {
     });
 
     const user = await User.findOne({ _id: appointment.userId });
-    const unseenNotifications = user.unseenNotifications;
-    unseenNotifications.push({
-      type: "appointment-status-changed",
-      message: `Your appointment status has been ${status}`,
-      onClickPath: "/appointments",
-    });
-
     await user.save();
 
     res.status(200).send({

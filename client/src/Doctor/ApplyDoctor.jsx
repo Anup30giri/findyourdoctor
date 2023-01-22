@@ -32,11 +32,14 @@ const ApplyDoctor = () => {
           },
         }
       );
-      if (res.data.success) setMessage(res.data.message);
+      if (res.data.success) {
+        setMessage(res.data.message);
+      } else {
+        setMessage(res.data.message);
+      }
     } catch (err) {
       console.log(err);
     }
-    console.log(data);
   };
   return (
     <div className="apply-doctor p-5">

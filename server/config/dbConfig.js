@@ -6,7 +6,7 @@ mongoose.connect(`mongodb://localhost:27017/doctorappointment`);
 const connection = mongoose.connection;
 
 connection.on("connected", () => {
-  console.log("MongoDB connection is successful");
+  console.log("Connected to MongoDB successfully");
 });
 
 connection.on("error", (error) => {

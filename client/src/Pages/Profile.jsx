@@ -41,7 +41,6 @@ const Profile = () => {
       .then((res) => {
         if (res.data.success) {
           setAppointmentsFromUser(res.data.data);
-          console.log(res.data.data);
         }
       })
       .catch((err) => {
@@ -50,13 +49,15 @@ const Profile = () => {
   };
   useEffect(() => {
     getAppointmentsOfDoctor();
-    getAppointmentsFromUser();
-  }, []);
+    if (user && user.isDoctor) {
+      getAppointmentsFromUser();
+    }
+  }, [user]);
 
   return (
     <div className="profile-page row gx-0 p-3">
       <div
-        className="personal-info d-flex justify-content-around flex-column col-md-4"
+        className="personal-info d-flex justify-content-around flex-column px-4 col-md-4"
         style={{ border: "1px dashed #D2CDF2" }}
       >
         <h3 style={{ color: "orange" }} className="py-3  fw-bold">

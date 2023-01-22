@@ -8,7 +8,7 @@
   }
   .sidebar {
     flex-basis: 20%;
-    background-color: #5f606d;
+    background-color: #e5effb;
     padding: 0 1rem;
     max-height: 100vh;
 
@@ -20,7 +20,7 @@
         transition: all 0.2s linear;
         font-size: 1rem;
         &:hover {
-          color: var(--text-secondary);
+          color: black;
         }
       }
     }

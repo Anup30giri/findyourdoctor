@@ -124,7 +124,7 @@ const Appointment = () => {
             </li>
             <li className="list-group-item list-group-item-success">
               <span className="fw-bold"> Fee Per Visit: </span>
-              {doctor && doctor.feePerConsultation}
+              Rs.{doctor && doctor.feePerConsultation}
             </li>
           </ul>
           <div className="form col-md-6">
@@ -136,6 +136,7 @@ const Appointment = () => {
                     type="date"
                     className="form-control"
                     placeholder="Enter your date"
+                    required
                     onChange={(value) => {
                       setDate(value.target.value);
                       setIsAvailable(false);
@@ -154,6 +155,7 @@ const Appointment = () => {
                       setTime(value.target.value);
                       setIsAvailable(false);
                     }}
+                    required
                   />
                 </div>
               </div>
@@ -163,6 +165,7 @@ const Appointment = () => {
                     <button
                       className="btn btn-primary"
                       onClick={checkAvailability}
+                      disabled={date === undefined || time === undefined}
                     >
                       Check Availability
                     </button>

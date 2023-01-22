@@ -53,7 +53,9 @@ const GetAllDoctors = () => {
           List of all Doctors
         </h2>
         {sucessMessage !== null && (
-          <div className="text-center alert alert-success">{sucessMessage}</div>
+          <div className="text-center alert alert-success">
+            {sucessMessage} <p>Reload to see Changes</p>
+          </div>
         )}
         <div className="table-responsive py-3">
           <table className="table table-striped table-hover">

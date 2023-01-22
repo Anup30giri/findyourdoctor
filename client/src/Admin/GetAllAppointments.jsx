@@ -4,18 +4,19 @@ import Sidebar from "./Sidebar";
 import { API, token } from "../network";
 import { useEffect } from "react";
 import { useState } from "react";
+import moment from "moment";
 
-const GetAllUsers = () => {
-  const [user, setUser] = useState([]);
-  const getUsers = async () => {
+const GetAllAppointments = () => {
+  const [appointment, setAppointment] = useState([]);
+  const getappointments = async () => {
     try {
-      const res = await axios.get(`${API}/api/admin/get-all-users`, {
+      const res = await axios.get(`${API}/api/admin/get-all-appointments`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       if (res.data.success) {
-        setUser(res.data.data);
+        setAppointment(res.data.data);
       }
     } catch (err) {
       console.log(err);
@@ -23,37 +24,42 @@ const GetAllUsers = () => {
   };
 
   useEffect(() => {
-    getUsers();
+    getappointments();
   }, []);
   return (
     <div className="admin-container">
       <Sidebar />
       <section className="admin-content">
         <h2 className="fw-bolder text-center text-primary">
-          List of all Users
+          List of all Appointments
         </h2>
         <div className="table-responsive py-3">
           <table className="table table-striped table-hover">
             <thead className="table-warning">
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Email</th>
-                <th scope="col">Role</th>
+                <th scope="col">Doctor</th>
+                <th scope="col">Patient</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Appointment Status</th>
+                <th scope="col">Booked Date</th>
+                <th scope="col">Booked Time</th>
                 <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody>
-              {user.map((user) => (
-                <tr key={user._id}>
-                  <td>{user.name}</td>
-                  <td>{user.email}</td>
+              {appointment.map((appointment) => (
+                <tr key={appointment._id}>
                   <td>
-                    {user.isDoctor && "Doctor"}
-                    {user.isAdmin && "Admin"}
-                    {!user.isDoctor && !user.isAdmin && "User"}
+                    {appointment?.doctorInfo.firstName}
+                    {appointment?.doctorInfo.lastName}
                   </td>
+                  <td>{appointment?.userInfo.name}</td>
+                  <td>{appointment?.createdAt.slice(0, 10)}</td>
+                  <td>{appointment?.status} by doctor</td>
+                  <td>{appointment?.date.slice(0, 10)} </td>
+                  <td>{moment(appointment?.time).format("hh:mm A")}</td>
+
                   <td style={{ gap: "8px" }} className="d-flex ">
-                    <button className="btn btn-sm btn-success">Update</button>
                     <button className="btn btn-sm btn-danger">Delete</button>
                   </td>
                 </tr>
@@ -66,4 +72,4 @@ const GetAllUsers = () => {
   );
 };
 
-export default GetAllUsers;
+export default GetAllAppointments;

@@ -22,13 +22,7 @@ const isAuthenticated = async (req, res, next) => {
     throw new Error("Not authorized, no token");
   }
 };
-const isDoctor = async (req, res, next) => {
-  if (req.user && req.user.isDoctor) {
-    next();
-  } else {
-    res.status(401).send({ message: "Not authorized as a doctor" });
-  }
-};
+
 const isAdmin = async (req, res, next) => {
   if (req.user && req.user.isAdmin) {
     next();
@@ -38,4 +32,4 @@ const isAdmin = async (req, res, next) => {
       .send({ message: "Not authorized as an admin", user: req.user });
   }
 };
-module.exports = { isAuthenticated, isAdmin, isDoctor };
+module.exports = { isAuthenticated, isAdmin };

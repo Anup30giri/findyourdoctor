@@ -10,6 +10,7 @@ import ApplyDoctor from "./Doctor/ApplyDoctor";
 import Profile from "./Pages/Profile";
 import FindDoctor from "./Doctor/FindDoctor";
 import Appointment from "./Doctor/Appointment";
+import GetAllAppointments from "./Admin/GetAllAppointments";
 
 function App() {
   return (
@@ -32,6 +33,10 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/get-all-users" element={<GetAllUsers />} />
             <Route path="/admin/get-all-doctors" element={<GetAllDoctors />} />
+            <Route
+              path="/admin/get-all-appointments"
+              element={<GetAllAppointments />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { API, token } from "../network";
+import moment from "moment";
 
 const DoctorTable = ({ appointmentsFromUser }) => {
   const [success, setSuccess] = useState(null);
@@ -28,7 +29,7 @@ const DoctorTable = ({ appointmentsFromUser }) => {
   return (
     <div className="table-responsive">
       {success && (
-        <div className="alert alert-success">
+        <div className=" text-center alert alert-success">
           {success}
           <p>Please Reload to see Changes</p>
         </div>
@@ -52,12 +53,7 @@ const DoctorTable = ({ appointmentsFromUser }) => {
                 <td>{appointment?.userInfo.name}</td>
                 <td>{appointment?.doctorInfo.phoneNumber}</td>
                 <td>{appointment?.date.substring(0, 10)}</td>
-                <td>
-                  {appointment?.time.substring(11, 16)}{" "}
-                  {appointment && appointment.time.substring(14, 16) >= 12
-                    ? "PM"
-                    : "AM"}
-                </td>
+                <td>{moment(appointment?.time).format("hh:mm A")}</td>
                 <td>{appointment?.status}</td>
                 <td>
                   {appointment.status === "pending" && (
