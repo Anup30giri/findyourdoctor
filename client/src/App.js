@@ -26,7 +26,7 @@ function App() {
             {/* Doctor */}
             <Route path="/doctor/apply" element={<ApplyDoctor />} />
             <Route path="/doctor/find" element={<FindDoctor />} />
-            <Route path="/doctor/appointment" element={<Appointment />} />
+            <Route path="/doctor/appointment/:id" element={<Appointment />} />
 
             {/* Admin */}
             <Route path="/admin/dashboard" element={<Dashboard />} />

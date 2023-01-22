@@ -5,6 +5,15 @@ const { isAuthenticated } = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const User = require("../models/userModel");
 
+// Get APproved Doctors
+router.get("/all-approved-doctors", async (req, res) => {
+  try {
+    const doctors = await Doctor.find({ status: "approved" });
+    res.status(200).send({ success: true, data: doctors });
+  } catch (error) {
+    res.status(500).send({ success: false, error });
+  }
+});
 router.post(
   "/get-doctor-info-by-user-id",
   isAuthenticated,
