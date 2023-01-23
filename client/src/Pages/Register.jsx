@@ -10,6 +10,8 @@ const Register = () => {
     name: "",
     email: "",
     password: "",
+    age: "",
+    sex: "",
   });
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
@@ -34,6 +36,8 @@ const Register = () => {
       email: data.email,
       password: data.password,
       name: data.name,
+      age: data.age,
+      sex: data.sex,
     });
     if (res.data.success) {
       setSuccess(true);
@@ -79,6 +83,34 @@ const Register = () => {
             placeholder="email"
             className="form-control"
             value={data.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="age">
+          <label htmlFor="age" className="form-label">
+            Age (inYears)
+          </label>
+          <input
+            id="age"
+            type="number"
+            name="age"
+            placeholder="age"
+            className="form-control"
+            value={data.age}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="sex">
+          <label htmlFor="sex" className="form-label">
+            Sex
+          </label>
+          <input
+            id="sex"
+            type="text"
+            name="sex"
+            placeholder="sex"
+            className="form-control"
+            value={data.sex}
             onChange={handleChange}
           />
         </div>

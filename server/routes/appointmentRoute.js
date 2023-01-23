@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Appointment = require("../models/appointmentModel");
 const Doctor = require("../models/doctorModel");
 const User = require("../models/userModel");
-const { isAuthenticated } = require("../middlewares/authMiddleware");
+const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
 
 // Get My Appointments
 router.post("/userId", isAuthenticated, async (req, res) => {
@@ -65,4 +65,35 @@ router.post("/change-appointment-status", isAuthenticated, async (req, res) => {
     });
   }
 });
+// Delete an Appointment
+router.delete(
+  "/delete-appointment/:id",
+  isAuthenticated,
+  isAdmin,
+  async (req, res) => {
+    try {
+      console.log(req.params.id);
+      const appointment = await Appointment.findOne({ _id: req.params.id });
+      if (!appointment) {
+        return res.status(200).send({
+          message: "Appointment does not exist",
+          success: false,
+        });
+      }
+      await appointment.remove();
+
+      res.status(200).send({
+        message: "Appointment deleted successfully",
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error deleting appointment",
+        success: false,
+        error,
+      });
+    }
+  }
+);
 module.exports = router;

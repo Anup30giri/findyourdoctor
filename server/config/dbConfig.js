@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.set("strictQuery", false);
 
-mongoose.connect(`mongodb://localhost:27017/doctorappointment`);
+mongoose.connect(`mongodb://localhost:27017/findMyDoctor`);
 
 const connection = mongoose.connection;
 

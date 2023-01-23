@@ -73,6 +73,14 @@ const Profile = () => {
             <p className="text-secondary">{user && user.email}</p>
           </div>
           <div className="personal-info-content-item">
+            <p className="text-primary fw-bold">Age</p>
+            <p className="text-secondary">{user && user.age}</p>
+          </div>
+          <div className="personal-info-content-item">
+            <p className="text-primary fw-bold">Sex</p>
+            <p className="text-secondary">{user && user.sex}</p>
+          </div>
+          <div className="personal-info-content-item">
             <p className="text-primary fw-bold">Account Created At</p>
             <p className="text-secondary">
               {user && user.createdAt.substring(0, 10)}

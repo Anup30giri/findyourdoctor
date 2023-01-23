@@ -13,6 +13,7 @@ import Appointment from "./Doctor/Appointment";
 import GetAllAppointments from "./Admin/GetAllAppointments";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import PatientProfile from "./Doctor/PatientProfile";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             <Route path="/doctor/apply" element={<ApplyDoctor />} />
             <Route path="/doctor/find" element={<FindDoctor />} />
             <Route path="/doctor/appointment/:id" element={<Appointment />} />
+            <Route path="/doctor/patient/:id" element={<PatientProfile />} />
 
             {/* Admin */}
             <Route path="/admin/dashboard" element={<Dashboard />} />

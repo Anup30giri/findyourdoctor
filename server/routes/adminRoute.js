@@ -96,5 +96,31 @@ router.get(
     }
   }
 );
+// Change admin role of user
+router.put(
+  "/change-admin-role/:id",
+  isAuthenticated,
+  isAdmin,
+  async (req, res) => {
+    try {
+      const { isAdmin } = req.body;
+      const user = await User.findByIdAndUpdate(req.params.id, {
+        isAdmin,
+      });
+      res.status(200).send({
+        message: "Admin Role Updated Successfully",
+        success: true,
+        data: user,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error Updating Admin Role",
+        success: false,
+        error,
+      });
+    }
+  }
+);
 
 module.exports = router;

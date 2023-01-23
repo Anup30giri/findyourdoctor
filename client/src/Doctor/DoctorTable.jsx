@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { API, token } from "../network";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 const DoctorTable = ({ appointmentsFromUser }) => {
   const [success, setSuccess] = useState(null);
@@ -50,7 +51,11 @@ const DoctorTable = ({ appointmentsFromUser }) => {
           {appointmentsFromUser &&
             appointmentsFromUser.map((appointment) => (
               <tr key={appointment._id}>
-                <td>{appointment?.userInfo.name}</td>
+                <td>
+                  <Link to={`/doctor/patient/${appointment?.userId}`}>
+                    {appointment?.userInfo.name}
+                  </Link>
+                </td>
                 <td>{appointment?.doctorInfo.phoneNumber}</td>
                 <td>{appointment?.date.substring(0, 10)}</td>
                 <td>{moment(appointment?.time).format("hh:mm A")}</td>

@@ -22,6 +22,25 @@ const GetAllAppointments = () => {
       console.log(err);
     }
   };
+  // Delete an Appointment
+
+  const deleteAppointment = async (id) => {
+    try {
+      const res = await axios.delete(
+        `${API}/api/appointment/delete-appointment/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        getappointments();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     getappointments();
@@ -60,7 +79,15 @@ const GetAllAppointments = () => {
                   <td>{moment(appointment?.time).format("hh:mm A")}</td>
 
                   <td style={{ gap: "8px" }} className="d-flex ">
-                    <button className="btn btn-sm btn-danger">Delete</button>
+                    <button
+                      className="btn btn-sm btn-danger"
+                      onClick={() => {
+                        alert("Are you sure you want to delete this?");
+                        deleteAppointment(appointment._id);
+                      }}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

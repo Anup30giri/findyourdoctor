@@ -22,6 +22,28 @@ const GetAllUsers = () => {
     }
   };
 
+  // Update Admin Role
+  const handleUpdateRole = async (id, isAdmin) => {
+    try {
+      const res = await axios.put(
+        `${API}/api/admin/change-admin-role/${id}`,
+        {
+          isAdmin: !isAdmin ? true : false,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.data.success) {
+        getUsers();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -53,8 +75,16 @@ const GetAllUsers = () => {
                     {!user.isDoctor && !user.isAdmin && "User"}
                   </td>
                   <td style={{ gap: "8px" }} className="d-flex ">
-                    <button className="btn btn-sm btn-success">Update</button>
-                    <button className="btn btn-sm btn-danger">Delete</button>
+                    <button
+                      className="btn btn-sm btn-success"
+                      onClick={() => {
+                        alert("Update Admin Role");
+                        handleUpdateRole(user._id, user.isAdmin);
+                      }}
+                    >
+                      Update Admin Role
+                    </button>
+                    {/* <button className="btn btn-sm btn-danger">Delete</button> */}
                   </td>
                 </tr>
               ))}
