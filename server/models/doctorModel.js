@@ -5,6 +5,7 @@ const doctorSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
+
     firstName: {
       type: String,
       required: true,
@@ -26,6 +27,11 @@ const doctorSchema = new mongoose.Schema(
     website: {
       type: String,
       required: true,
+    },
+    hospital:{
+      type: String,
+      required: true,
+  
     },
     address: {
       type: String,

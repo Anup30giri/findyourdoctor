@@ -14,6 +14,8 @@ import GetAllAppointments from "./Admin/GetAllAppointments";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import PatientProfile from "./Doctor/PatientProfile";
+import Blood from "./Pages/Blood";
+import GetAllDonors from "./Admin/GetAllDonors";
 
 function App() {
   return (
@@ -28,6 +30,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/blood" element={<Blood />} />
 
             {/* Doctor */}
             <Route path="/doctor/apply" element={<ApplyDoctor />} />
@@ -39,6 +42,7 @@ function App() {
             <Route path="/admin/dashboard" element={<Dashboard />} />
             <Route path="/admin/get-all-users" element={<GetAllUsers />} />
             <Route path="/admin/get-all-doctors" element={<GetAllDoctors />} />
+            <Route path="/admin/get-all-donors" element={<GetAllDonors />} />
             <Route
               path="/admin/get-all-appointments"
               element={<GetAllAppointments />}

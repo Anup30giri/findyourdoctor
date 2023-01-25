@@ -9,6 +9,7 @@ const ApplyDoctor = () => {
     lastName: "",
     phoneNumber: "",
     address: "",
+    hospital: "",
     specialization: "",
     experience: "",
     feePerConsultation: "",
@@ -161,6 +162,20 @@ const ApplyDoctor = () => {
                 name="experience"
                 onChange={handleChange}
                 value={data.experience}
+                required
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="hospital" className="form-label">
+                Hospital Name
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                id="hospital"
+                name="hospital"
+                onChange={handleChange}
+                value={data.hosital}
                 required
               />
             </div>

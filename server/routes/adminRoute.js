@@ -4,6 +4,7 @@ const User = require("../models/userModel");
 const Doctor = require("../models/doctorModel");
 const Appointment = require("../models/appointmentModel");
 const { isAuthenticated, isAdmin } = require("../middlewares/authMiddleware");
+const bloodModel = require("../models/bloodModel");
 
 // Get all doctors
 router.get("/get-all-doctors", isAuthenticated, isAdmin, async (req, res) => {
@@ -116,6 +117,54 @@ router.put(
       console.log(error);
       res.status(500).send({
         message: "Error Updating Admin Role",
+        success: false,
+        error,
+      });
+    }
+  }
+);
+// donors
+// Get Donors
+router.get("/blood", async (req, res) => {
+  try {
+    const donors = await bloodModel.find({});
+    return res.status(200).send({
+      success: true,
+      data: donors,
+    });
+  } catch (error) {
+    return res.status(200).send({
+      success: false,
+      error: error,
+    });
+  }
+});
+
+// Delete an Appointment
+router.delete(
+  "/delete-blood/:id",
+  isAuthenticated,
+  isAdmin,
+  async (req, res) => {
+    try {
+      console.log(req.params.id);
+      const donors = await bloodModel.findOne({ _id: req.params.id });
+      if (!donors) {
+        return res.status(200).send({
+          message: "Appointment does not exist",
+          success: false,
+        });
+      }
+      await donors.remove();
+
+      res.status(200).send({
+        message: "Appointment deleted successfully",
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({
+        message: "Error deleting appointment",
         success: false,
         error,
       });

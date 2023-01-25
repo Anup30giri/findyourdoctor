@@ -77,8 +77,12 @@ const FindDoctor = () => {
             <div className="overlay">
               <img
                 className="img img-fluid doctor-img"
-                src={doctor.image}
-                alt=""
+                src={
+                  doctor?.image && doctor.image.slice(0, 4) !== "http"
+                    ? `${API}/uploads/${doctor?.image}`
+                    : doctor?.image
+                }
+                alt={doctor?.name}
               />
               <div className="actions">
                 <button
@@ -90,18 +94,24 @@ const FindDoctor = () => {
               </div>
               <div className="doctor-info">
                 <h4 className="fw-bolder">
-                  {doctor.firstName} {doctor.lastName}
+                  {doctor?.firstName} {doctor?.lastName}
                 </h4>
                 <div className="sub-info d-flex justify-content-between align-items-center">
                   <p className="text-primary specialization  fw-bolder">
-                    {doctor.specialization}
+                    {doctor?.specialization}
                   </p>
                   <p className="text-success fw-bold">
-                    Rs. {doctor.feePerConsultation}
+                    Rs. {doctor?.feePerConsultation}
                   </p>
                 </div>
+                <p
+                  style={{ padding: "0", margin: "0", fontSize: "15px" }}
+                  className="text-secondary fw-bold"
+                >
+                  {doctor?.hospital}
+                </p>
                 <p className="text-secondary fw-bolder">
-                  {doctor.address}, Nepal
+                  {doctor?.address}, Nepal
                 </p>
               </div>
             </div>

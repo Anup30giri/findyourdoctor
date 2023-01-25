@@ -15,7 +15,6 @@ const PatientProfile = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data.success) setPatient(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -31,8 +30,12 @@ const PatientProfile = () => {
       </h2>
       <div className="patient-info d-flex align-items-center justify-content-center px-1 flex-column">
         <img
-          src="https://www.kindpng.com/picc/m/235-2356295_profile-picture-man-cartoon-hd-png-download.png"
-          alt="patient"
+          src={
+            patient?.image && patient.image.slice(0, 4) !== "http"
+              ? `${API}/uploads/${patient?.image}`
+              : patient?.image
+          }
+          alt={patient?.name}
           className="img-fluid"
           style={{ maxWidth: "40vw", maxHeight: "40vh", borderRadius: "8px" }}
         />

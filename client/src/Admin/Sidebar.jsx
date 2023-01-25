@@ -40,6 +40,15 @@ const Sidebar = () => {
           <span>Appointment</span>
         </p>
       </Link>
+      <Link
+        to="/admin/get-all-donors"
+        className="sidebar-item  d-flex align-items-center"
+      >
+        <p>
+          <i className="fa-solid fa-hand-holding-medical"></i>{" "}
+          <span>Blood Donors</span>
+        </p>
+      </Link>
     </div>
   );
 };

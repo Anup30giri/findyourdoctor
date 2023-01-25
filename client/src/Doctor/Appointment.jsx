@@ -118,6 +118,10 @@ const Appointment = () => {
               <span className="fw-bold"> Timings: </span>
               {doctor && doctor.timings}
             </li>
+            <li className="list-group-item list-group-item-primary">
+              <span className="fw-bold"> Hospital: </span>
+              {doctor && doctor.hospital}
+            </li>
             <li className="list-group-item list-group-item-warning">
               <span className="fw-bold"> Address: </span>
               {doctor && doctor.address}

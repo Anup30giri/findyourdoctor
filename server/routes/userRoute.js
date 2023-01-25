@@ -2,11 +2,13 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/userModel");
 const Doctor = require("../models/doctorModel");
+const Blood = require("../models/bloodModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { isAuthenticated } = require("../middlewares/authMiddleware");
 const Appointment = require("../models/appointmentModel");
 const moment = require("moment");
+const upload = require("../config/fileUpload");
 
 // Register User
 router.post("/", async (req, res) => {
@@ -94,17 +96,17 @@ router.get("/:id", isAuthenticated, async (req, res) => {
 router.post("/apply-doctor-account", isAuthenticated, async (req, res) => {
   try {
     const doctorExists = await Doctor.findOne({ userId: req.body.userId });
-    if (doctorExists) {
+    if (!doctorExists) {
+      const newdoctor = new Doctor({ ...req.body, status: "pending" });
+      await newdoctor.save();
       res.status(200).send({
-        success: false,
-        message: "You Have already applied for doctor account",
+        success: true,
+        message: "Doctor account applied successfully",
       });
     }
-    const newdoctor = new Doctor({ ...req.body, status: "pending" });
-    await newdoctor.save();
     res.status(200).send({
-      success: true,
-      message: "Doctor account applied successfully",
+      success: false,
+      message: "You Have already applied for doctor account",
     });
   } catch (error) {
     console.log(error);
@@ -179,4 +181,44 @@ router.post(
   }
 );
 
+// Post Blood donate form
+router.post("/blood", async (req, res) => {
+  try {
+    const blood = new Blood(req.body);
+    await blood.save();
+    return res.status(200).send({
+      success: true,
+      message: "Submitted Successfully",
+    });
+  } catch (error) {
+    return res.status(500).send({
+      success: true,
+      message: error,
+    });
+  }
+});
+
+router.put("/image/:id", upload.single("image"), async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, {
+      image: req.file.filename,
+    });
+    const isDoctor = await Doctor.findOne({ userId: user._id });
+    if (isDoctor) {
+      isDoctor.image = req.file.filename;
+      await isDoctor.save();
+    }
+
+    res.status(200).json({
+      message: "Uploaded Successfully",
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message,
+    });
+  }
+});
 module.exports = router;

@@ -18,7 +18,13 @@ const Navbar = () => {
       <nav className="navbar navbar-expand-lg navbar-light d-flex">
         <div className="container-fluid py-auto ml-auto px-4">
           <NavLink to="/" className=" navbar-brand main-logo">
-            Find Your Doctor
+            <img
+              src="/images/doctor.jpg"
+              alt=""
+              className="img img-fluid"
+              style={{ height: "50px" }}
+            />
+            <span> Find Your Doctor</span>
           </NavLink>
           <button
             className="navbar-toggler"
@@ -56,6 +62,11 @@ const Navbar = () => {
               <li className="nav-item">
                 <NavLink className="nav-link " to="/about">
                   About
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link " to="/blood">
+                  Blood
                 </NavLink>
               </li>
               {userInfo ? (
