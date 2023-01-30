@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import axios from "axios";
-import { API, ID, token } from "../network";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { API, ID, token } from '../network';
 
 const ApplyDoctor = () => {
   const [message, setMessage] = useState(null);
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    address: "",
-    hospital: "",
-    specialization: "",
-    experience: "",
-    feePerConsultation: "",
-    website: "",
-    timings: "",
+    firstName: '',
+    lastName: '',
+    phoneNumber: '',
+    address: '',
+    hospital: '',
+    specialization: '',
+    experience: '',
+    feePerConsultation: '',
+    website: '',
+    timings: '',
     userId: `${ID}`,
   });
   const handleChange = ({ currentTarget: input }) => {
@@ -23,23 +23,28 @@ const ApplyDoctor = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await axios.post(
-        `${API}/api/user/apply-doctor-account`,
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    console.log(data.timings.slice(0, 2));
+    if (data?.timings.slice(0, 2) >= 17 || data?.timings.slice(0, 2) <= 7) {
+      alert('Please Apply Between 7AM to 5PM');
+    } else {
+      try {
+        const res = await axios.post(
+          `${API}/api/user/apply-doctor-account`,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (res.data.success) {
+          setMessage(res.data.message);
+        } else {
+          setMessage(res.data.message);
         }
-      );
-      if (res.data.success) {
-        setMessage(res.data.message);
-      } else {
-        setMessage(res.data.message);
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   };
   return (
@@ -56,7 +61,7 @@ const ApplyDoctor = () => {
       >
         <div
           className="form-field d-flex justify-content-center"
-          style={{ gap: "2rem" }}
+          style={{ gap: '2rem' }}
         >
           <div className="personal">
             <h3 className="text-secondary fw-bold py-3">

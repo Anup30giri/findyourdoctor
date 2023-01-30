@@ -1,9 +1,10 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { ContextUser } from "../Context/UserContext";
-import { API, token } from "../network";
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { ContextUser } from '../Context/UserContext';
+import { API, token } from '../network';
+import moment from 'moment';
 
 const Appointment = () => {
   const [success, setSuccess] = useState(null);
@@ -41,31 +42,42 @@ const Appointment = () => {
   };
   // Check Availablilty of Doctor
   const checkAvailability = () => {
-    axios
-      .post(
-        `${API}/api/user/check-booking-availability`,
-        {
-          doctorId: params.id,
-          date,
-          time,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+    if (
+      // input data>=doctordata and input data<=17
+      time.slice(0, 2) >= doctor?.timings.slice(0, 2) &&
+      time.slice(0, 2) <= 17
+    ) {
+      axios
+        .post(
+          `${API}/api/user/check-booking-availability`,
+          {
+            doctorId: params.id,
+            date,
+            time,
           },
-        }
-      )
-      .then((res) => {
-        if (res.data.success) {
-          setSuccess(res.data.message);
-          setIsAvailable(true);
-        } else {
-          setError(res.data.message);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          if (res.data.success) {
+            setSuccess(res.data.message);
+            setIsAvailable(true);
+            setTimeout(() => {
+              setSuccess(null);
+            }, 3000);
+          } else {
+            setError(res.data.message);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      return alert('Please Select Time Between Doctor Timings to 5PM');
+    }
   };
   // Book Appointment
   const bookNow = () => {
@@ -89,7 +101,7 @@ const Appointment = () => {
       .then((res) => {
         if (res.data.success) {
           setSuccess(res.data.message);
-          navigate("/profile");
+          navigate('/profile');
         }
       })
       .catch((err) => {
@@ -117,6 +129,7 @@ const Appointment = () => {
             <li className="list-group-item list-group-item-info">
               <span className="fw-bold"> Timings: </span>
               {doctor && doctor.timings}
+              {doctor && doctor.timings >= 12 ? 'PM' : 'AM'}
             </li>
             <li className="list-group-item list-group-item-primary">
               <span className="fw-bold"> Hospital: </span>
